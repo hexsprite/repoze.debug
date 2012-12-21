@@ -89,8 +89,8 @@ class ResponseLoggingMiddleware:
         info['wsgi_variables'] = []
         info['body'] = ''
         if environ.has_key('wsgi.input'):
-            info['body'] = environ['wsgi.input'].read()
-            environ['wsgi.input'].seek(0)
+            info['body'] = environ['wsgi.input'].read(int(environ['CONTENT_LENGTH']))
+            # environ['wsgi.input'].seek(0)
         for k, v in sorted(request_data[('extra', 'CGI Variables')].items()):
             info['cgi_variables'].append((k, v))
         for k, v in sorted(request_data[('extra', 'WSGI Variables')].items()):
